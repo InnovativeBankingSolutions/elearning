@@ -23,7 +23,11 @@ CLASS /wav/clt_xgw_item_available IMPLEMENTATION.
     DATA: one_item_unavailable TYPE boolean VALUE abap_false.
     LOOP AT tab_item ASSIGNING FIELD-SYMBOL(<item>).
       DATA(sdc_item) = CAST /wav/clt_sdc_item( <item> ).
+
+      "An dieser Stelle erfolgt der Zugriff auf die Datenbank - alternativ über ein DAO, dass den Datenbankzugriff ersetzt.
       DATA(item_count) = NEW /wav/clt_item_stock_dao( )->get_stock_cnt_for_item_number( sdc_item->get_item_number( ) ).
+
+
       IF item_count <= 0.
         sdc_item->set_is_available( abap_false ).
         one_item_unavailable = abap_true.

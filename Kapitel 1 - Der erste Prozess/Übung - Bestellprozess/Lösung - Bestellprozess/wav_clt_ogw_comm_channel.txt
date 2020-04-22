@@ -11,7 +11,10 @@ CLASS /wav/clt_ogw_comm_channel DEFINITION
   PRIVATE SECTION.
 ENDCLASS.
 
+
+
 CLASS /wav/clt_ogw_comm_channel IMPLEMENTATION.
+
 
   METHOD /wav/if_opening_gateway~execute.
     DATA(order_sdc) = CAST /wav/clt_sdc_item_order( im_data_container ).
@@ -25,6 +28,6 @@ CLASS /wav/clt_ogw_comm_channel IMPLEMENTATION.
         INSERT CONV #( 'LETTER' ) INTO TABLE re_tab_decision.
         INSERT CONV #( 'MAIL' ) INTO TABLE re_tab_decision.
     ENDCASE.
+
   ENDMETHOD.
-  
 ENDCLASS.

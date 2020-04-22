@@ -1,7 +1,6 @@
 CLASS /wav/clt_tk_calc_inv_amount DEFINITION
   PUBLIC
   INHERITING FROM /wav/cl_task
-  FINAL
   CREATE PUBLIC .
 
   PUBLIC SECTION.
@@ -9,6 +8,8 @@ CLASS /wav/clt_tk_calc_inv_amount DEFINITION
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
+
+
 
 CLASS /wav/clt_tk_calc_inv_amount IMPLEMENTATION.
 
@@ -19,10 +20,14 @@ CLASS /wav/clt_tk_calc_inv_amount IMPLEMENTATION.
     DATA: max_sum TYPE /wav/et_item_price.
     LOOP AT tab_item ASSIGNING FIELD-SYMBOL(<item>).
       DATA(sdc_item) = CAST /wav/clt_sdc_item( <item> ).
-      max_sum = max_sum + ( sdc_item->get_item_price( ) * sdc_item->get_item_count( ) ).
+
+      "An dieser Stelle erfolgt der Zugriff auf die Datenbank - alternativ über ein DAO, dass den Datenbankzugriff ersetzt.
+      DATA(price) = NEW /wav/clt_item_stock_dao( )->get_item_price( sdc_item->get_item_number( ) ).
+
+      max_sum = max_sum + ( price * sdc_item->get_item_count( ) ).
     ENDLOOP.
 
-    DATA(invoice_amount) = max_sum - ( ( max_sum * sdc_order->get_order_discount( ) ) / 100 ).
+    DATA(invoice_amount) = max_sum - sdc_order->get_order_discount( ).
 
     "Die Gesamthöhe (inkl. errechneter Rabatt) wird am Datencontainer vermerkt
     sdc_order->set_invoice_amount( CONV #( invoice_amount ) ).
