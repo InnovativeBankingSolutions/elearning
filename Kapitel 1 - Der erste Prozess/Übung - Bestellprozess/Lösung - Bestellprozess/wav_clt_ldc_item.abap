@@ -1,0 +1,14 @@
+CLASS /wav/clt_ldc_item DEFINITION
+  PUBLIC
+  INHERITING FROM /wav/cl_list_data_container
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS /wav/clt_ldc_item IMPLEMENTATION.
+ENDCLASS.
