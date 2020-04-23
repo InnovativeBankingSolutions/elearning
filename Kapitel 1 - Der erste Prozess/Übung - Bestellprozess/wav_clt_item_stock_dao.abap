@@ -1,4 +1,4 @@
-    IF sy-subrc = 0.CLASS /wav/clt_item_stock_dao DEFINITION
+CLASS /wav/clt_item_stock_dao DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
